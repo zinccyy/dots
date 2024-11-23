@@ -47,4 +47,8 @@ return {
     },
     lazy = false,
   },
+  "nvzone/volt",
+  { "nvzone/timerly", cmd = "TimerlyToggle", config = {
+    minutes = { 45, 5 },
+  } },
 }
