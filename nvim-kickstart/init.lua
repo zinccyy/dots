@@ -1,4 +1,4 @@
---[[init
+--[[initinit
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -395,6 +395,9 @@ require("lazy").setup({
 						require("telescope.themes").get_dropdown(),
 					},
 				},
+				defaults = {
+					file_ignore_patterns = { "build" },
+				},
 			})
 
 			-- Enable Telescope extensions if they are installed
@@ -623,8 +626,9 @@ require("lazy").setup({
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				clangd = {},
+				zls = {},
 				-- gopls = {},
-				-- pyright = {},
+				pyright = {},
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
@@ -840,22 +844,32 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"navarasu/onedark.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
-		opts = {
-			style = "darker",
-		},
-		config = function(_, opts)
-			require("onedark").setup(opts)
-			vim.cmd.colorscheme("onedark")
+	{
+		"sainnhe/gruvbox-material",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.o.termguicolors = true
+			vim.g.gruvbox_material_background = "soft"
+			vim.cmd.colorscheme("gruvbox-material")
 		end,
 	},
+
+	-- { -- You can easily change to a different colorscheme.
+	-- 	-- Change the name of the colorscheme plugin below, and then
+	-- 	-- change the command in the config to whatever the name of that colorscheme is.
+	-- 	--
+	-- 	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	-- 	"navarasu/onedark.nvim",
+	-- 	priority = 1000, -- Make sure to load this before all the other start plugins.
+	-- 	opts = {
+	-- 		style = "darker",
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("onedark").setup(opts)
+	-- 		vim.cmd.colorscheme("onedark")
+	-- 	end,
+	-- },
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -939,7 +953,6 @@ require("lazy").setup({
 		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	},
-
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
@@ -949,11 +962,11 @@ require("lazy").setup({
 	--  Here are some example plugins that I've included in the Kickstart repository.
 	--  Uncomment any of the lines below to enable them (you will need to restart nvim).
 	--
-	-- require 'kickstart.plugins.debug',
+	require("kickstart.plugins.debug"),
 	require("kickstart.plugins.indent_line"),
 	-- require 'kickstart.plugins.lint',
 	require("kickstart.plugins.autopairs"),
-	-- require("kickstart.plugins.neo-tree"),
+	require("kickstart.plugins.neo-tree"),
 	-- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -981,6 +994,12 @@ require("lazy").setup({
 			vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
 			vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
 			vim.keymap.set("n", "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
+		end,
+	},
+	{
+		"xiyaowong/transparent.nvim",
+		config = function()
+			require("transparent").setup({})
 		end,
 	},
 }, {
