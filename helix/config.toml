@@ -1,0 +1,15 @@
+theme = "base16_transparent"
+
+[editor]
+true-color = true
+line-number = "relative"
+
+[keys.normal]
+C-s = ":w" # Maps Ctrl-s to the typable command :w which is an alias for :write (save file)
+H = "goto_line_start"
+L = "goto_line_end"
+0 = "goto_line_start"
+"$" = "goto_line_end"
+
+[keys.insert]
+j = { k = "normal_mode" }
