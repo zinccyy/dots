@@ -440,6 +440,15 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
+
+			-- Shortcut for changing theme to light or dark
+			vim.keymap.set("n", "<leader>st", function()
+				if vim.o.background == "dark" then
+					vim.o.background = "light"
+				else
+					vim.o.background = "dark"
+				end
+			end, { desc = "[S]witch [T]heme" })
 		end,
 	},
 
@@ -629,7 +638,7 @@ require("lazy").setup({
 				zls = {},
 				-- gopls = {},
 				pyright = {},
-				-- rust_analyzer = {},
+				rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
@@ -844,14 +853,63 @@ require("lazy").setup({
 			})
 		end,
 	},
+	-- {
+	-- 	"ellisonleao/gruvbox.nvim",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		-- Default options:
+	-- 		require("gruvbox").setup({
+	-- 			terminal_colors = true, -- add neovim terminal colors
+	-- 			undercurl = true,
+	-- 			underline = true,
+	-- 			bold = true,
+	-- 			italic = {
+	-- 				strings = true,
+	-- 				emphasis = true,
+	-- 				comments = true,
+	-- 				operators = false,
+	-- 				folds = true,
+	-- 			},
+	-- 			strikethrough = true,
+	-- 			invert_selection = false,
+	-- 			invert_signs = false,
+	-- 			invert_tabline = false,
+	-- 			invert_intend_guides = false,
+	-- 			inverse = true, -- invert background for search, diffs, statuslines and errors
+	-- 			contrast = "", -- can be "hard", "soft" or empty string
+	-- 			palette_overrides = {},
+	-- 			overrides = {},
+	-- 			dim_inactive = false,
+	-- 			transparent_mode = false,
+	-- 		})
+	-- 		vim.cmd("set background=light")
+	-- 		vim.cmd("colorscheme gruvbox")
+	-- 	end,
+	-- },
 	{
 		"sainnhe/gruvbox-material",
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.o.termguicolors = true
-			vim.g.gruvbox_material_background = "soft"
-			vim.cmd.colorscheme("gruvbox-material")
+			local function init_background()
+				time = os.date("*t")
+				hour = time.hour
+				vim.o.termguicolors = true
+
+				if hour >= 20 then
+					vim.o.background = "dark"
+					vim.g.gruvbox_material_background = "hard"
+					vim.g.gruvbox_material_foreground = "mix"
+				else
+					vim.o.background = "light"
+					vim.g.gruvbox_material_background = "soft"
+					vim.g.gruvbox_material_foreground = "mix"
+				end
+
+				vim.cmd.colorscheme("gruvbox-material")
+			end
+
+			init_background()
 		end,
 	},
 
