@@ -1,0 +1,23 @@
+[general]
+import = ["colors.toml"]
+
+[env]
+TERM = "screen-256color"
+
+[window]
+startup_mode = "Fullscreen"
+blur = true
+opacity = 1
+
+[font]
+size = 12
+normal      = { family = "Lilex Nerd Font", style = "Bold" }
+bold        = { family = "Lilex Nerd Font", style = "Bold" }
+italic      = { family = "Lilex Nerd Font", style = "Italic" }
+bold_italic = { family = "Lilex Nerd Font", style = "Bold Italic" }
+
+[selection]
+save_to_clipboard = true
+
+[keyboard]
+bindings = [{ key = "F11", action = "ToggleFullscreen"},]
