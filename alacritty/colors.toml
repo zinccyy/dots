@@ -1,2 +1,2 @@
 [general]
-import = ["./themes/vscode.toml"]
+import = ["./alacritty-theme/themes/gruvbox_dark.toml"]
