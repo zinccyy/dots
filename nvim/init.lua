@@ -168,13 +168,18 @@ vim.keymap.set("n", "<c-s>", "<cmd>w<CR>")
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("v", "<leader>p", '"_dP', { desc = "Paste without losing content" })
 vim.keymap.set("n", "<leader>cb", "<cmd>q<CR>", { desc = "Close Buffer" })
-vim.keymap.set("n", "<leader>csb", "<cmd>q<CR>", { desc = "Close Buffer" })
+vim.keymap.set("n", "<leader>db", "<cmd>bdelete<CR>", { desc = "Delete Buffer" })
+vim.keymap.set("n", "<leader>dab", "<cmd>bufdo bdelete<CR>", { desc = "Buffer Delete All" })
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
+-- Tab switching keymaps
+vim.keymap.set("n", "<leader>tn", ":tabnext<CR>", { desc = "Tab Next" })
+vim.keymap.set("n", "<leader>tp", ":tabprev<CR>", { desc = "Tab Prev" })
+vim.keymap.set("n", "<leader>ts", ":tabs<CR>", { desc = "Tabs Show" })
+vim.keymap.set("n", "<leader>to", ":tabnew<CR>", { desc = "Tab Open/New" })
+vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { desc = "Tab Close" })
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
@@ -284,7 +289,7 @@ require("lazy").setup({
 				palette_overrides = {},
 				overrides = {},
 				dim_inactive = false,
-				transparent_mode = false,
+				transparent_mode = true,
 			})
 			vim.cmd("colorscheme gruvbox")
 		end,
@@ -364,6 +369,15 @@ require("lazy").setup({
 	-- you do for a plugin at the top level, you can do for a dependency.
 	--
 	-- Use the `dependencies` key to specify the dependencies of a particular plugin
+	{
+		"rmagatti/auto-session",
+		lazy = false,
+
+		---enables autocomplete for opts
+		---@module "auto-session"
+		---@type AutoSession.Config
+		opts = {},
+	},
 
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
@@ -435,6 +449,15 @@ require("lazy").setup({
 				},
 				defaults = {
 					file_ignore_patterns = { "build" },
+				},
+				mappings = {
+					n = {
+						["<c-d>"] = require("telescope.actions").delete_buffer,
+					}, -- n
+					i = {
+						["<C-h>"] = "which_key",
+						["<c-d>"] = require("telescope.actions").delete_buffer,
+					}, -- i
 				},
 			})
 
@@ -683,6 +706,8 @@ require("lazy").setup({
 				gopls = {},
 				pyright = {},
 				rust_analyzer = {},
+				ts_ls = {},
+				html = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
@@ -1057,7 +1082,7 @@ require("lazy").setup({
 	--    This is the easiest way to modularize your config.
 	--
 	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	-- { import = 'custom.plugins' },
+	{ import = "custom.plugins" },
 	--
 	-- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
 	-- Or use telescope!
