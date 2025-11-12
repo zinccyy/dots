@@ -1,2 +1,2 @@
 [general]
-import = ["./alacritty-theme/themes/gruvbox_dark.toml"]
+import = ["./alacritty-theme/themes/base16_default_dark.toml"]

@@ -1022,7 +1022,36 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			require("lualine").setup()
+			require("lualine").setup({
+				options = {
+					section_separators = "",
+					component_separators = "",
+				},
+				sections = {
+					lualine_a = { "mode" },
+					lualine_b = { "branch" },
+					lualine_c = {
+						"%=", --[[ add your center components here in place of this comment ]]
+						{ "filetype", icon_only = true },
+						{ "filename", path = 2 },
+					},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = {
+						{ "location", separator = { right = "" }, left_padding = 2 },
+					},
+				},
+				inactive_sections = {
+					lualine_a = { "filename" },
+					lualine_b = {},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = { "location" },
+				},
+				tabline = {},
+				extensions = {},
+			})
 		end,
 	},
 	{ -- Highlight, edit, and navigate code
